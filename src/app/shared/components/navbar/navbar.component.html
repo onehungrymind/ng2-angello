@@ -1,3 +1,21 @@
-<p>
-  navbar works!
-</p>
+<div class="navbar navbar-fixed-top navbar-default">
+  <div class="navbar-header pull-left">
+    <a class="logo navbar-brand" routerLink="">
+      <img src="assets/img/angello.png">
+    </a>
+  </div>
+  <div class="btn-group pull-right" ng-show="vm.currentUser">
+    <a class="btn btn-danger" routerLink="">
+      <span class="glyphicon glyphicon-home"></span>
+    </a>
+    <a class="btn btn-danger" routerLink="users">
+      <span class="glyphicon glyphicon-user"></span>
+    </a>
+    <a class="btn btn-danger" routerLink="dashboard">
+      <span class="glyphicon glyphicon-signal"></span>
+    </a>
+    <button class="btn btn-default" routerLink="login" ng-click="vm.logout()">
+      <span class="glyphicon glyphicon-log-out"></span>
+    </button>
+  </div>
+</div>
