@@ -11,7 +11,7 @@ import { LoginComponent } from './components/login/login.component';
 import { StoryboardComponent } from './components/storyboard/storyboard.component';
 import { UsersComponent } from './components/users/users.component';
 import { UserComponent } from './components/users/user/user.component';
-import { NavbarComponent } from './shared/components/navbar/navbar.component';
+import { NavbarComponent, EndpointConfigService } from './shared';
 
 @NgModule({
   declarations: [
@@ -29,7 +29,9 @@ import { NavbarComponent } from './shared/components/navbar/navbar.component';
     HttpModule,
     Ng2AngelloRoutingModule
   ],
-  providers: [],
+  providers: [
+    EndpointConfigService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
