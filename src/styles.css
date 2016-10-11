@@ -1,1 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import "~bootstrap-css-only";
+@import "assets/css/angello.css";
+@import "assets/css/animations.css";
+@import "assets/css/normalize.css";
