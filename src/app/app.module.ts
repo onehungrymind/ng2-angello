@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AngularFireModule } from 'angularfire2';
 
@@ -12,7 +12,13 @@ import { LoginComponent } from './components/login/login.component';
 import { StoryboardComponent } from './components/storyboard/storyboard.component';
 import { UsersComponent } from './components/users/users.component';
 import { UserComponent } from './components/users/user/user.component';
-import { NavbarComponent, EndpointConfigService } from './shared';
+import {
+  NavbarComponent,
+  EndpointConfigService ,
+  UsersService,
+  UtilsService,
+  StoriesService
+} from './shared';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAitFUM94AHlau3g7DUVCn5UNOwPGDpdxQ",
@@ -39,12 +45,16 @@ const angularFireConfig = AngularFireModule.initializeApp(
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     Ng2AngelloRoutingModule,
     angularFireConfig
   ],
   providers: [
-    EndpointConfigService
+    EndpointConfigService,
+    UsersService,
+    UtilsService,
+    StoriesService
   ],
   bootstrap: [AppComponent]
 })

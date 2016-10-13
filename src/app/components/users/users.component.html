@@ -1,1 +1,60 @@
-<h1>Users</h1>
+<div class="user-wrapper">
+  <form [formGroup]="userForm">
+    <table class="table edit">
+      <thead>
+      <tr>
+        <th width="40%">Name</th>
+        <th width="40%">Email</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody formArrayName="users">
+      <tr [formGroupName]="i" *ngFor="let user of userForm.controls.users.controls; let i = index;">
+        <td>
+          <div>
+            <input required name="userName" type="text" formControlName="name" class="form-control" (blur)="updateUser(user)"/>
+
+            <div class="error" *ngIf="showMessages(user.controls.name)">
+              Please enter a name.
+            </div>
+          </div>
+        </td>
+        <td>
+          <div>
+            <input required name="userEmail" type="email" formControlName="email" class="form-control" (blur)="updateUser(user)"/>
+
+            <div class="error" *ngIf="showMessages(user.controls.email)">
+              Please enter an email.
+            </div>
+          </div>
+        </td>
+        <td>
+          <button type="button" class="btn btn-link"
+                  (click)="removeUser(user.value.id)">Remove</button>
+          <a class="btn btn-link" [routerLink]="[user.value.id]">View</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </form>
+
+  <div class="well">
+    <h4>Add User</h4>
+
+    <form name="newUserForm" #newUserForm="ngForm" class="form-inline new-user" role="form" novalidate (submit)="addUser(newUserForm.form)">
+      <div class="form-group">
+        <input #name="ngModel" required name="userName" type="text" class="form-control" [(ngModel)]="newUser.name" placeholder="Name">
+        <div class="error" ng-messages="newUserForm.userName.$error" *ngIf="showMessages(name)">
+          Please enter a name.
+        </div>
+      </div>
+      <div class="form-group">
+        <input #email="ngModel" required name="userEmail" type="email" class="form-control" [(ngModel)]="newUser.email" placeholder="Email">
+        <div class="error" *ngIf="showMessages(email)">
+          Please enter an email.
+        </div>
+      </div>
+      <button [disabled]="newUserForm.invalid" type="submit" class="btn btn-default">Add</button>
+    </form>
+  </div>
+</div>

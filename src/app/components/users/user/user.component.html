@@ -1,1 +1,11 @@
-<h1>User</h1>
+<div class="user-wrapper">
+  <h2>Stories Assigned to {{user?.name}}</h2>
+  <article *ngFor="let story of stories" class="{{story.type}}">
+    <div class="modal-header">
+      <h3>{{story.title}}</h3>
+    </div>
+    <div class="modal-body">
+      <p>{{story.description}}</p>
+    </div>
+  </article>
+</div>
