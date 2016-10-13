@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { AngularFireModule } from 'angularfire2';
 
 import { Ng2AngelloRoutingModule } from './app-routing.module';
 
@@ -12,6 +13,18 @@ import { StoryboardComponent } from './components/storyboard/storyboard.componen
 import { UsersComponent } from './components/users/users.component';
 import { UserComponent } from './components/users/user/user.component';
 import { NavbarComponent, EndpointConfigService } from './shared';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAitFUM94AHlau3g7DUVCn5UNOwPGDpdxQ",
+  authDomain: "my-first-angello.firebaseapp.com",
+  databaseURL: "https://my-first-angello.firebaseio.com",
+  storageBucket: "my-first-angello.appspot.com",
+  messagingSenderId: "969593256234"
+};
+
+const angularFireConfig = AngularFireModule.initializeApp(
+  firebaseConfig
+);
 
 @NgModule({
   declarations: [
@@ -27,7 +40,8 @@ import { NavbarComponent, EndpointConfigService } from './shared';
     BrowserModule,
     FormsModule,
     HttpModule,
-    Ng2AngelloRoutingModule
+    Ng2AngelloRoutingModule,
+    angularFireConfig
   ],
   providers: [
     EndpointConfigService
