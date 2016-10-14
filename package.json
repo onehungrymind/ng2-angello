@@ -24,13 +24,18 @@
     "bootstrap-css-only": "^3.3.6",
     "core-js": "^2.4.1",
     "firebase": "^3.4.1",
+    "flot": "^0.8.0-alpha",
+    "jquery": "^3.1.1",
     "rxjs": "5.0.0-beta.12",
+    "sugar": "^2.0.1",
     "ts-helpers": "^1.1.1",
     "zone.js": "^0.6.23"
   },
   "devDependencies": {
+    "@types/flot": "0.0.28",
     "@types/form-data": "0.0.32",
     "@types/jasmine": "^2.2.30",
+    "@types/jquery": "^2.0.33",
     "@types/node": "^6.0.42",
     "@types/request": "0.0.31",
     "angular-cli": "1.0.0-beta.17",

@@ -12,6 +12,8 @@ import { LoginComponent } from './components/login/login.component';
 import { StoryboardComponent } from './components/storyboard/storyboard.component';
 import { UsersComponent } from './components/users/users.component';
 import { UserComponent } from './components/users/user/user.component';
+import { ChartDirective } from './components/dashboard/chart.directive';
+
 import {
   NavbarComponent,
   EndpointConfigService ,
@@ -40,7 +42,8 @@ const angularFireConfig = AngularFireModule.initializeApp(
     StoryboardComponent,
     UsersComponent,
     UserComponent,
-    NavbarComponent
+    NavbarComponent,
+    ChartDirective
   ],
   imports: [
     BrowserModule,
