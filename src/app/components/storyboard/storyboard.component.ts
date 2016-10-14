@@ -53,7 +53,6 @@ export class StoryboardComponent implements OnInit {
     this.currentStoryId = story.id;
     this.currentStory = story;
     this.editedStory = Object.assign({}, this.currentStory);
-    console.log('EDITED STORY: ', this.editedStory)
   };
 
   getStories() {

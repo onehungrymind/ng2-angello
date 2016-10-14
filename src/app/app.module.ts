@@ -13,6 +13,7 @@ import { StoryboardComponent } from './components/storyboard/storyboard.componen
 import { UsersComponent } from './components/users/users.component';
 import { UserComponent } from './components/users/user/user.component';
 import { ChartDirective } from './components/dashboard/chart.directive';
+import { DraggingService } from './components/storyboard/drag-and-drop/dragging.service';
 
 import {
   NavbarComponent,
@@ -22,7 +23,9 @@ import {
   StoriesService,
   StatusPipe
 } from './shared';
-import { UserStoryDirective } from './components/storyboard/user-story.directive';
+import { DragContainerDirective } from './components/storyboard/drag-and-drop/drag-container.directive';
+import { DropContainerDirective } from './components/storyboard/drag-and-drop/drop-container.directive';
+import { DropTargetDirective } from './components/storyboard/drag-and-drop/drop-target.directive';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAitFUM94AHlau3g7DUVCn5UNOwPGDpdxQ",
@@ -47,7 +50,9 @@ const angularFireConfig = AngularFireModule.initializeApp(
     NavbarComponent,
     ChartDirective,
     StatusPipe,
-    UserStoryDirective
+    DragContainerDirective,
+    DropContainerDirective,
+    DropTargetDirective
   ],
   imports: [
     BrowserModule,
@@ -61,7 +66,8 @@ const angularFireConfig = AngularFireModule.initializeApp(
     EndpointConfigService,
     UsersService,
     UtilsService,
-    StoriesService
+    StoriesService,
+    DraggingService
   ],
   bootstrap: [AppComponent]
 })
