@@ -15,6 +15,18 @@ export class StoriesService {
     private utilsService: UtilsService
   ) { }
 
+  getBlankStory() {
+    return {
+      title: '',
+      status: '',
+      type: '',
+      description: '',
+      criteria: '',
+      reporter: '',
+      assignee: ''
+    };
+  }
+
   all() {
     return this.http.get(this.endpointConfigService.getUrl(
       this.MODEL + this.endpointConfigService.getCurrentFormat()))

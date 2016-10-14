@@ -22,6 +22,7 @@ import {
   StoriesService,
   StatusPipe
 } from './shared';
+import { UserStoryDirective } from './components/storyboard/user-story.directive';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAitFUM94AHlau3g7DUVCn5UNOwPGDpdxQ",
@@ -45,7 +46,8 @@ const angularFireConfig = AngularFireModule.initializeApp(
     UserComponent,
     NavbarComponent,
     ChartDirective,
-    StatusPipe
+    StatusPipe,
+    UserStoryDirective
   ],
   imports: [
     BrowserModule,

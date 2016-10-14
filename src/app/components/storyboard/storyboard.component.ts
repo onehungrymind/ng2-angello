@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService, StoriesService, STORY_TYPES, STORY_STATUSES } from '../../shared';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-storyboard',
@@ -11,11 +12,12 @@ export class StoryboardComponent implements OnInit {
   detailsVisible: boolean = true;
   currentStoryId: number = null;
   currentStory: {} = null;
-  editedStory: {} = {};
+  editedStory: {} = this.storiesService.getBlankStory();
   stories: {}[] = [];
   users: {}[] = [];
   statuses: {}[] = STORY_STATUSES;
   types: {}[] = STORY_TYPES;
+  form: FormGroup;
 
   constructor(
     private storiesService: StoriesService,
@@ -25,11 +27,14 @@ export class StoryboardComponent implements OnInit {
   ngOnInit() {
     this.getStories();
     this.getUsers();
+  }
 
-    // $scope.$on('storyDeleted', () { =>
-    //   this.getStories();
-    //   this.resetForm();
-    // });
+  setForm(form) {
+    this.form = form;
+  }
+
+  keys(object) {
+    return Object.keys(object);
   }
 
   getUsers() {
@@ -65,7 +70,7 @@ export class StoryboardComponent implements OnInit {
     this.storiesService.create(this.editedStory)
       .then(result => {
         this.getStories();
-        this.resetForm({});
+        this.resetForm();
         console.log('RESULT', result);
       }, (reason) => {
         console.log('ERROR', reason);
@@ -82,27 +87,40 @@ export class StoryboardComponent implements OnInit {
     this.storiesService.update(this.currentStoryId, this.editedStory)
       .then(result => {
         this.getStories();
-        this.resetForm({});
+        this.resetForm();
         console.log('RESULT', result);
       }, (reason) => {
         console.log('REASON', reason);
       });
   };
 
+  deleteStory(id) {
+    this.storiesService.destroy(id)
+      .then(result => {
+        this.getStories();
+        this.resetForm();
+        console.log('RESULT', result);
+      }, reason => {
+        console.log('ERROR', reason);
+      });
+  };
+
   updateCancel() {
-    this.resetForm({});
+    this.resetForm();
   };
 
   showMessages(field) {
-    return field.touched && field.invalid;
+    return this.form
+      ? this.form.controls[field].touched && this.form.controls[field].invalid
+      : false;
   };
 
-  resetForm(form) {
+  resetForm() {
     this.currentStory = null;
     this.editedStory = {};
 
-    form.markAsPristine();
-    form.markAsUntouched();
+    this.form.markAsPristine();
+    this.form.markAsUntouched();
   };
 
   setDetailsVisible(visible) {
