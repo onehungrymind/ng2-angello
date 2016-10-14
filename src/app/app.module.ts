@@ -19,7 +19,8 @@ import {
   EndpointConfigService ,
   UsersService,
   UtilsService,
-  StoriesService
+  StoriesService,
+  StatusPipe
 } from './shared';
 
 const firebaseConfig = {
@@ -43,7 +44,8 @@ const angularFireConfig = AngularFireModule.initializeApp(
     UsersComponent,
     UserComponent,
     NavbarComponent,
-    ChartDirective
+    ChartDirective,
+    StatusPipe
   ],
   imports: [
     BrowserModule,

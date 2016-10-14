@@ -1,1 +1,199 @@
-<h1>Storyboard</h1>
+<!-- STORIES -->
+<div class="list-area-animation"
+     [ngClass]="{'list-area-expanded':!detailsVisible}">
+  <div class="list-wrapper">
+    <ul class="list my-repeat-animation"
+        *ngFor="let status of statuses">
+      <h3 class="status">{{status.name}}</h3>
+      <hr/>
+      <li userstory
+          *ngFor="let story of stories | status: status.name"
+          drag-container="story" mime-type="application/x-angello-status"
+          drop-container="" accepts="['application/x-angello-status']"
+          class="story my-repeat-animation"
+          (click)="setCurrentStory(story)">
+
+        <div drop-target="top" on-drag-enter="insertAdjacent(story, data, true)" on-drop="finalizeDrop(data)"></div>
+        <div drop-target="bottom" on-drag-enter="insertAdjacent(story, data, false)" on-drop="finalizeDrop(data)"></div>
+
+        <article>
+          <div>
+            <button type="button" class="close" (click)="userStory.deleteStory(story.id)">
+              ×
+            </button>
+            <p class="title">{{story.title}}</p>
+          </div>
+          <div class="type-bar {{story.type}}"></div>
+          <div>
+            <p>{{story.description}}</p>
+          </div>
+        </article>
+      </li>
+      <div
+        class="emptystatus"
+        drop-container="" accepts="['application/x-angello-status']"
+        on-drop="finalizeDrop(data)"
+        on-drag-enter="changeStatus(data, status)"
+        *ngIf="isEmptyStatus(status)">
+      </div>
+    </ul>
+  </div>
+</div>
+
+
+<!-- STORY DETAILS -->
+<div class="details details-animation"
+     [ngClass]="{'details-visible':detailsVisible}">
+  <div class="details-nav">
+    <div *ngIf="!detailsVisible">
+      <button class="btn pull-left btn-default"
+              (click)="setDetailsVisible(true)">
+        <span class="glyphicon glyphicon-arrow-left"></span>
+      </button>
+    </div>
+    <div *ngIf="detailsVisible">
+      <button class="btn pull-right btn-default"
+              (click)="setDetailsVisible(false)">
+        <span class="glyphicon glyphicon-arrow-right"></span>
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="detailsVisible" class="my-fade-animation">
+    <h3>Card Details</h3>
+
+    <form name="detailsForm" novalidate="">
+      <div class="form-group">
+        <div class="controls">
+          <label class="control-label" for="inputTitle">*Title</label>
+          <input class="form-control" type="text" id="inputTitle" name="inputTitle"
+                 placeholder="Title" [(ngModel)]="editedStory.title"
+                 ng-required="true" ng-minlength="3" ng-maxlength="30">
+
+          <div class="alert alert-warning"
+               ng-messages="detailsForm.inputTitle.$error"
+               *ngIf="showMessages('inputTitle')">
+
+            <div ng-message="required">
+              <small>Required!</small>
+            </div>
+            <div ng-message="minlength">
+              <small>Too short!</small>
+            </div>
+            <div ng-message="maxlength">
+              <small>Too long!</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label" for="inputStatus">*Status</label>
+
+        <div class="controls">
+          <select id="inputStatus" name="inputStatus" class="form-control" [(ngModel)]="editedStory.status" ng-required="true">
+            <option value="">Select Status</option>
+            <option *ngFor="let status of statuses">{{status.name}}</option>
+          </select>
+
+          <div
+            [ngClass]="{'alert alert-error alert-warning': detailsForm.inputStatus.$invalid}"
+            ng-messages="detailsForm.inputStatus.$error"
+            *ngIf="showMessages('inputStatus')">
+
+            <div ng-message="required">
+              <small>Required!</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label" for="inputType">*Type</label>
+
+        <div class="controls">
+          <select id="inputType" name="inputType" class="form-control" [(ngModel)]="editedStory.type" ng-required="true">
+            <option value="">Select Status</option>
+            <option *ngFor="let type of types">{{type.name}}</option>
+          </select>
+
+          <div
+            [ngClass]="{'alert alert-error alert-warning': detailsForm.inputType.$invalid}"
+            ng-messages="detailsForm.inputType.$error"
+            *ngIf="showMessages('inputType')">
+
+            <div ng-message="required">
+              <small>Required!</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label" for="inputDescription">Description</label>
+
+        <div class="controls">
+          <textarea id="inputDescription" name="inputDescription" class="form-control" placeholder="Description" rows="3" [(ngModel)]="editedStory.description"></textarea>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label" for="inputAcceptance">Acceptance Criteria</label>
+
+        <div class="controls">
+          <textarea id="inputAcceptance" name="inputAcceptance" class="form-control" placeholder="Acceptance Criteria" rows="3" [(ngModel)]="editedStory.criteria"></textarea>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label">*Reporter</label>
+
+        <div class="controls">
+          <select [(ngModel)]="editedStory.reporter" class="form-control"
+                  name="inputReporter" ng-required="true">
+            <option value="undefined">Select Status</option>
+            <option [value]="user.id" *ngFor="let user of users">{{user.name}}</option>
+          </select>
+          <div [ngClass]="{'alert alert-error alert-warning': detailsForm.inputReporter.$invalid}"
+               ng-messages="detailsForm.inputReporter.$error"
+               *ngIf="showMessages('inputReporter')">
+
+            <div ng-message="required">
+              <small>Required!</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label">*Assignee</label>
+
+        <div class="controls">
+          <select [(ngModel)]="editedStory.assignee" class="form-control"
+                  name="inputAssignee" ng-required="true">
+            <option value="undefined">Select Status</option>
+            <option [value]="user.id" *ngFor="let user of users;">{{user.name}}</option>
+          </select>
+
+          <div
+            [ngClass]="{'alert alert-error alert-warning': detailsForm.inputAssignee.$invalid}"
+            ng-messages="detailsForm.inputAssignee.$error"
+            *ngIf="showMessages('inputAssignee')">
+
+            <div ng-message="required">
+              <small>Required!</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    <hr>
+    <div *ngIf="currentStory">
+      <button class="btn btn-default" (click)="updateCancel()">
+        Cancel
+      </button>
+      <button class="btn pull-right btn-default"
+              ng-disabled="detailsForm.$invalid"
+              (click)="updateStory()">Update</button>
+    </div>
+    <div *ngIf="!currentStory">
+      <button class="btn pull-right btn-default"
+              ng-disabled="detailsForm.$invalid"
+              (click)="createStory()">New Storyboard</button>
+    </div>
+  </div>
+</div>
