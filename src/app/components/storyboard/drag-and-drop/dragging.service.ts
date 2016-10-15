@@ -5,11 +5,7 @@ export class DraggingService {
   private data: any = null;
   private type: any = null;
 
-  constructor() {
-    console.log('DATA: ', this.data);
-    this.setData({foo: 'bar'});
-    console.log('DATA: ', this.data);
-  }
+  constructor() { }
 
   getData() {
     return this.data;

@@ -156,17 +156,18 @@ export class StoryboardComponent implements OnInit {
     }
   };
 
-  finalizeDrop(story) {
-    this.storiesService.update(story.id, story)
+  finalizeDrop(event) {
+    this.storiesService.update(event.data.id, event.data)
       .then(result => {
+        this.stories = this.stories.map((story: any) => story.id === event.data.id ? event.data : story);
         console.log('RESULT', result);
       }, (reason) => {
         console.log('REASON', reason);
       });
   };
 
-  changeStatus(story, status) {
-    story.status = status.name;
+  changeStatus(event, status) {
+    event.data.status = status.name;
   };
 
   trackById (index: number, value: any) {

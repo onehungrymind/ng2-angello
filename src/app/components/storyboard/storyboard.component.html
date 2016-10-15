@@ -7,8 +7,8 @@
       <h3 class="status">{{status.name}}</h3>
       <hr/>
       <li *ngFor="let story of stories | status: status.name"
-          drag-container="story" mime-type="application/x-angello-status"
-          drop-container="" accepts="['application/x-angello-status']"
+          [appDragContainer]="story" mimeType="application/x-angello-status"
+          appDropContainer [accepts]="['application/x-angello-status']"
           class="story my-repeat-animation"
           (click)="setCurrentStory(story)">
 
@@ -30,9 +30,9 @@
       </li>
       <div
         class="emptystatus"
-        drop-container="" accepts="['application/x-angello-status']"
-        on-drop="finalizeDrop(data)"
-        on-drag-enter="changeStatus(data, status)"
+        appDropContainer [accepts]="['application/x-angello-status']"
+        (onDrop)="finalizeDrop($event)"
+        (onDragEnter)="changeStatus($event, status)"
         *ngIf="isEmptyStatus(status)">
       </div>
     </ul>

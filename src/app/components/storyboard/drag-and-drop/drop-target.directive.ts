@@ -1,10 +1,8 @@
-import { Directive } from '@angular/core';
+import { Directive, OnInit } from '@angular/core';
 
 @Directive({
   selector: '[appDropTarget]'
 })
-export class DropTargetDirective {
-
-  constructor() { }
-
+export class DropTargetDirective implements OnInit{
+  ngOnInit() {}
 }
