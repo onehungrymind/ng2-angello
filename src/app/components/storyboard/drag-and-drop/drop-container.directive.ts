@@ -76,7 +76,7 @@ export class DropContainerDirective implements OnInit, OnChanges, OnDestroy{
     var prevTarget = dropContainer.activeTarget;
 
     if (!skipUpdateTarget) {
-      $.each(dropContainer.targets, function (dropTarget, anchor) {
+      $.each(dropContainer.targets, function (anchor, dropTarget) {
         var width = dropContainer.el[0].offsetWidth;
         var height = dropContainer.el[0].offsetHeight;
         var anchorX = width / 2;

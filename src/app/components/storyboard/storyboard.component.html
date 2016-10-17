@@ -12,8 +12,8 @@
           class="story my-repeat-animation"
           (click)="setCurrentStory(story)">
 
-        <div drop-target="top" on-drag-enter="insertAdjacent(story, data, true)" on-drop="finalizeDrop(data)"></div>
-        <div drop-target="bottom" on-drag-enter="insertAdjacent(story, data, false)" on-drop="finalizeDrop(data)"></div>
+        <div appDropTarget="top" (onDragEnter)="insertAdjacent(story, $event, true)" (onDrop)="finalizeDrop($event)"></div>
+        <div appDropTarget="bottom" (onDragEnter)="insertAdjacent(story, $event, false)" (onDrop)="finalizeDrop($event)"></div>
 
         <article>
           <div>

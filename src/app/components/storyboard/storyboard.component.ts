@@ -137,7 +137,9 @@ export class StoryboardComponent implements OnInit {
     return empty;
   };
 
-  insertAdjacent(target, story, insertBefore) {
+  insertAdjacent(target, event, insertBefore) {
+    var story = event.data;
+
     if (target === story) return;
 
     var fromIdx = this.stories.indexOf(story);
