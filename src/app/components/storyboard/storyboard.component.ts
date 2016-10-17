@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { UsersService, StoriesService, STORY_TYPES, STORY_STATUSES } from '../../shared';
 import { FormGroup } from '@angular/forms';
 
@@ -21,7 +21,8 @@ export class StoryboardComponent implements OnInit {
 
   constructor(
     private storiesService: StoriesService,
-    private usersService: UsersService
+    private usersService: UsersService,
+    private cd: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -43,6 +44,7 @@ export class StoryboardComponent implements OnInit {
         this.users = (result !== null && result.length > 0) ? result : [{
           name: 'Please create a user'
         }];
+        this.cd.detectChanges();
         console.log('RESULT', result);
       }, (reason) => {
         console.log('REASON', reason);
@@ -59,6 +61,7 @@ export class StoryboardComponent implements OnInit {
     this.storiesService.all()
       .then(result => {
         this.stories = (result !== 'null') ? result : [];
+        this.cd.detectChanges();
         console.log('RESULT', result);
       }, (reason) => {
         console.log('REASON', reason);

@@ -4,7 +4,7 @@
       <img src="assets/img/angello.png">
     </a>
   </div>
-  <div class="btn-group pull-right" ng-show="vm.currentUser">
+  <div class="btn-group pull-right" *ngIf="loginService.authenticated()">
     <a class="btn btn-danger" routerLink="">
       <span class="glyphicon glyphicon-home"></span>
     </a>
@@ -14,7 +14,7 @@
     <a class="btn btn-danger" routerLink="dashboard">
       <span class="glyphicon glyphicon-signal"></span>
     </a>
-    <button class="btn btn-default" routerLink="login" ng-click="vm.logout()">
+    <button class="btn btn-default" routerLink="login" (click)="logout()">
       <span class="glyphicon glyphicon-log-out"></span>
     </button>
   </div>

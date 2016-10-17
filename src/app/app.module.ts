@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AngularFireModule } from 'angularfire2';
+import { AUTH_PROVIDERS, provideAuth } from 'angular2-jwt';
 
 import { Ng2AngelloRoutingModule } from './app-routing.module';
 
@@ -21,7 +22,9 @@ import {
   UsersService,
   UtilsService,
   StoriesService,
-  StatusPipe
+  LoginService,
+  StatusPipe,
+  AuthGuard
 } from './shared';
 import { DragContainerDirective } from './components/storyboard/drag-and-drop/drag-container.directive';
 import { DropContainerDirective } from './components/storyboard/drag-and-drop/drop-container.directive';
@@ -63,11 +66,17 @@ const angularFireConfig = AngularFireModule.initializeApp(
     angularFireConfig
   ],
   providers: [
+    AUTH_PROVIDERS,
     EndpointConfigService,
     UsersService,
     UtilsService,
     StoriesService,
-    DraggingService
+    LoginService,
+    DraggingService,
+    provideAuth({
+      noTokenScheme: true
+    }),
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { AuthHttp } from 'angular2-jwt';
 import { EndpointConfigService } from './endpoint-config.service';
 import { UtilsService } from './utils.service';
 import 'rxjs/add/operator/map';
@@ -10,7 +10,7 @@ export class StoriesService {
   MODEL: string = '/stories/';
 
   constructor(
-    private http: Http,
+    private authHttp: AuthHttp,
     private endpointConfigService: EndpointConfigService,
     private utilsService: UtilsService
   ) { }
@@ -28,7 +28,7 @@ export class StoriesService {
   }
 
   all() {
-    return this.http.get(this.endpointConfigService.getUrl(
+    return this.authHttp.get(this.endpointConfigService.getUrl(
       this.MODEL + this.endpointConfigService.getCurrentFormat()))
       .map(response => response.json())
       .toPromise()
@@ -36,7 +36,7 @@ export class StoriesService {
   };
 
   fetch(story_id) {
-    return this.http.get(
+    return this.authHttp.get(
       this.endpointConfigService.getUrlForId(this.MODEL, story_id)
     )
     .map(response => response.json())
@@ -44,7 +44,7 @@ export class StoriesService {
   };
 
   create(story) {
-    return this.http.post(
+    return this.authHttp.post(
       this.endpointConfigService.getUrl(this.MODEL + this.endpointConfigService.getCurrentFormat()), story
     )
     .map(response => response.json())
@@ -52,7 +52,7 @@ export class StoriesService {
   };
 
   update(story_id, story) {
-    return this.http.put(
+    return this.authHttp.put(
       this.endpointConfigService.getUrlForId(this.MODEL, story_id), story
     )
     .map(response => response.json())
@@ -60,7 +60,7 @@ export class StoriesService {
   };
 
   destroy(story_id) {
-    return this.http.delete(
+    return this.authHttp.delete(
       this.endpointConfigService.getUrlForId(this.MODEL, story_id)
     )
     .map(response => response.json())

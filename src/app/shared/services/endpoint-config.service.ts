@@ -13,15 +13,20 @@ export class EndpointConfigService {
     const endpointMap = {
         firebase: { URI: 'https://my-first-angello.firebaseio.com/', root: 'clients/', format: '.json' },
         node: { URI: 'http://localhost:4000/', root: 'api/clients/', format: ''}
-      };
+      },
+      profile = JSON.parse(localStorage.getItem('profile'))
 
     this.currentEndpoint = endpointMap[CURRENT_BACKEND];
-    this.userId = null;
+    this.userId = profile ? profile.user_id : null;
     this.backend = CURRENT_BACKEND;
 
     // $rootScope.$on('onCurrentUserId', function(event, id){
     //   this.userId = id;
     // });
+  }
+
+  setUser(id) {
+    this.userId = id;
   }
 
   getUrl(model) {

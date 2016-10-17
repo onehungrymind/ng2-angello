@@ -7,13 +7,14 @@ import {
   UsersComponent,
   UserComponent
 } from './components';
+import { AuthGuard } from './shared';
 
 const routes: Routes = [
-  { path: '', component: StoryboardComponent},
-  { path: 'dashboard', component: DashboardComponent },
+  { path: '', component: StoryboardComponent, canActivate: [AuthGuard]},
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
-  { path: 'users', component: UsersComponent },
-  { path: 'users/:id', component: UserComponent },
+  { path: 'users', component: UsersComponent, canActivate: [AuthGuard] },
+  { path: 'users/:id', component: UserComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
