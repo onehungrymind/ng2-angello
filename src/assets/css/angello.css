@@ -83,7 +83,6 @@ body.loading .modal {
 .list-area {
     position: absolute;
     left: 0;
-    right: 250px;
     top: 0;
     bottom: 0;
     overflow-x: auto;
@@ -130,6 +129,8 @@ body.loading .modal {
 
 .details-nav .btn {
     margin-top: 48px;
+    position: relative;
+    z-index: 1;
 }
 
 .chart {

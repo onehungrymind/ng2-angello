@@ -1,15 +1,17 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { UsersService, StoriesService, STORY_TYPES, STORY_STATUSES } from '../../shared';
 import { FormGroup } from '@angular/forms';
+import { listAreaAnimation, detailAreaAnimation, detailContentAnimation } from './storyboard.animations.ts';
 
 @Component({
   selector: 'app-storyboard',
   templateUrl: 'storyboard.component.html',
-  styleUrls: ['storyboard.component.css']
+  styleUrls: ['storyboard.component.css'],
+  animations: [listAreaAnimation, detailAreaAnimation, detailContentAnimation]
 })
 export class StoryboardComponent implements OnInit {
   name: string = 'storyboard';
-  detailsVisible: boolean = true;
+  animationState: string = 'detailsShown';
   currentStoryId: number = null;
   currentStory: {} = null;
   editedStory: {} = this.storiesService.getBlankStory();
@@ -125,8 +127,8 @@ export class StoryboardComponent implements OnInit {
     this.form.markAsUntouched();
   };
 
-  setDetailsVisible(visible) {
-    this.detailsVisible = visible;
+  setAnimationState(state) {
+    this.animationState = state;
   };
 
   isEmptyStatus(status) {

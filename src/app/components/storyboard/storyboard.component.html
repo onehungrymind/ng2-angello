@@ -1,6 +1,6 @@
 <!-- STORIES -->
-<div class="list-area-animation"
-     [ngClass]="{'list-area-expanded':!detailsVisible}">
+<div class="list-area"
+     [@listAreaState]="animationState">
   <div class="list-wrapper">
     <ul class="list my-repeat-animation"
         *ngFor="let status of statuses">
@@ -41,24 +41,23 @@
 
 
 <!-- STORY DETAILS -->
-<div class="details details-animation"
-     [ngClass]="{'details-visible':detailsVisible}">
+<div class="details details-animation" [@detailAreaState]="animationState">
   <div class="details-nav">
-    <div *ngIf="!detailsVisible">
+    <div *ngIf="animationState === 'detailsHidden'">
       <button class="btn pull-left btn-default"
-              (click)="setDetailsVisible(true)">
+              (click)="setAnimationState('detailsShown')">
         <span class="glyphicon glyphicon-arrow-left"></span>
       </button>
     </div>
-    <div *ngIf="detailsVisible">
+    <div *ngIf="animationState === 'detailsShown'">
       <button class="btn pull-right btn-default"
-              (click)="setDetailsVisible(false)">
+              (click)="setAnimationState('detailsHidden')">
         <span class="glyphicon glyphicon-arrow-right"></span>
       </button>
     </div>
   </div>
 
-  <div *ngIf="detailsVisible" class="my-fade-animation">
+  <div class="my-fade-animation" [@detailContentState]="animationState">
     <h3>Card Details</h3>
 
     <form #detailsForm="ngForm" name="detailsForm" novalidate>
