@@ -3,9 +3,6 @@ import { Router } from '@angular/router';
 import { EndpointConfigService } from './endpoint-config.service';
 import { tokenNotExpired } from 'angular2-jwt';
 
-// Avoid name not found warnings
-declare var Auth0Lock: any;
-
 @Injectable()
 export class LoginService {
   // Configure Auth0
@@ -24,6 +21,7 @@ export class LoginService {
     this.lock.show((error, profile, id_token) => {
       localStorage.setItem('profile', JSON.stringify(profile));
       localStorage.setItem('id_token', id_token);
+      this.endpointConfigService.setUser(profile.user_id);
       this.router.navigateByUrl('/');
       this.ref.tick();
     });

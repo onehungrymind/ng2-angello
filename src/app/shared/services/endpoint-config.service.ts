@@ -19,13 +19,10 @@ export class EndpointConfigService {
     this.currentEndpoint = endpointMap[CURRENT_BACKEND];
     this.userId = profile ? profile.user_id : null;
     this.backend = CURRENT_BACKEND;
-
-    // $rootScope.$on('onCurrentUserId', function(event, id){
-    //   this.userId = id;
-    // });
   }
 
   setUser(id) {
+    console.log('SETTING USER: ', id);
     this.userId = id;
   }
 
