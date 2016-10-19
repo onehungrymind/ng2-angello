@@ -1,15 +1,14 @@
 <!-- STORIES -->
-<div class="list-area"
-     [@listAreaState]="animationState">
+<div class="list-area" [@listAreaState]="animationState" @fader>
   <div class="list-wrapper">
-    <ul class="list my-repeat-animation"
+    <ul class="list"
         *ngFor="let status of statuses">
       <h3 class="status">{{status.name}}</h3>
       <hr/>
       <li *ngFor="let story of stories | status: status.name"
           [appDragContainer]="story" mimeType="application/x-angello-status"
           appDropContainer [accepts]="['application/x-angello-status']"
-          class="story my-repeat-animation"
+          class="story" @fader
           (click)="setCurrentStory(story)">
 
         <div appDropTarget="top" (onDragEnter)="insertAdjacent(story, $event, true)" (onDrop)="finalizeDrop($event)"></div>
@@ -41,7 +40,7 @@
 
 
 <!-- STORY DETAILS -->
-<div class="details details-animation" [@detailAreaState]="animationState">
+<div class="details" [@detailAreaState]="animationState" @fader>
   <div class="details-nav">
     <div *ngIf="animationState === 'detailsHidden'">
       <button class="btn pull-left btn-default"
@@ -57,7 +56,7 @@
     </div>
   </div>
 
-  <div class="my-fade-animation" [@detailContentState]="animationState">
+  <div [@detailContentState]="animationState">
     <h3>Card Details</h3>
 
     <form #detailsForm="ngForm" name="detailsForm" novalidate>

@@ -1,13 +1,18 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { UsersService, StoriesService, STORY_TYPES, STORY_STATUSES } from '../../shared';
 import { FormGroup } from '@angular/forms';
-import { listAreaAnimation, detailAreaAnimation, detailContentAnimation } from './storyboard.animations.ts';
+import {
+  listAreaAnimation,
+  detailAreaAnimation,
+  detailContentAnimation,
+  repeaterAnimation
+} from './storyboard.animations.ts';
 
 @Component({
   selector: 'app-storyboard',
   templateUrl: 'storyboard.component.html',
   styleUrls: ['storyboard.component.css'],
-  animations: [listAreaAnimation, detailAreaAnimation, detailContentAnimation]
+  animations: [listAreaAnimation, detailAreaAnimation, detailContentAnimation, repeaterAnimation]
 })
 export class StoryboardComponent implements OnInit {
   name: string = 'storyboard';
@@ -142,6 +147,10 @@ export class StoryboardComponent implements OnInit {
     return empty;
   };
 
+  updateStories(story) {
+    return this.stories.map((s: any) => s.id === story.id ? story : s);
+  }
+
   insertAdjacent(target, event, insertBefore) {
     var story = event.data;
 
@@ -161,12 +170,14 @@ export class StoryboardComponent implements OnInit {
 
       story.status = target.status;
     }
+
+    this.stories = this.updateStories(story);
   };
 
   finalizeDrop(event) {
     this.storiesService.update(event.data.id, event.data)
       .then(result => {
-        this.stories = this.stories.map((story: any) => story.id === event.data.id ? event.data : story);
+        this.stories = this.updateStories(event.data);
         console.log('RESULT', result);
       }, (reason) => {
         console.log('REASON', reason);
@@ -175,6 +186,8 @@ export class StoryboardComponent implements OnInit {
 
   changeStatus(event, status) {
     event.data.status = status.name;
+
+    this.stories = this.updateStories(event.data);
   };
 
   trackById (index: number, value: any) {

@@ -6,7 +6,7 @@ import {
   animate
 } from '@angular/core';
 
-const animationTransition = transition('detailsHidden <=> detailsShown', animate('500ms ease-out'));
+const detailsTransition = transition('detailsHidden <=> detailsShown', animate('500ms ease-out'));
 
 export const listAreaAnimation = trigger('listAreaState', [
   state('detailsHidden', style({
@@ -15,7 +15,7 @@ export const listAreaAnimation = trigger('listAreaState', [
   state('detailsShown', style({
     right: '250px'
   })),
-  animationTransition
+  detailsTransition
 ]);
 
 export const detailAreaAnimation = trigger('detailAreaState', [
@@ -27,7 +27,7 @@ export const detailAreaAnimation = trigger('detailAreaState', [
     transform: 'translateX(0)',
     background: '#eee'
   })),
-  animationTransition
+  detailsTransition
 ]);
 
 export const detailContentAnimation = trigger('detailContentState', [
@@ -37,5 +37,15 @@ export const detailContentAnimation = trigger('detailContentState', [
   state('detailsShown', style({
     opacity: '1'
   })),
-  animationTransition
+  detailsTransition
+]);
+
+export const repeaterAnimation = trigger('fader', [
+  transition('void => *', [
+    style({opacity: 0}),
+    animate('500ms', style({opacity: 1}))
+  ]),
+  transition('* => void', [
+    animate('500ms', style({opacity: 0}))
+  ])
 ]);
